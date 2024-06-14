@@ -8,6 +8,8 @@ private:
     int cr_size{};
     int arr_element{};
 public:
+    smart_array(const smart_array&) = delete;  // запрет копирования
+    smart_array& operator=(const smart_array&) = delete; // запрет оператора присваивания
     smart_array(int size) : cr_size(size), arr_element(size) { cr_array = new int [cr_size]; };
     ~smart_array(){delete[] cr_array; };
 
