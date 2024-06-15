@@ -25,12 +25,23 @@ public:
         return cr_array[index];
     }
 
-    smart_array& operator=(smart_array& array)
+    smart_array(const smart_array& array) {
+        arr_element = array.arr_element;
+        cr_size = array.cr_size;
+        if(array.cr_array)
+        {
+            cr_array = new int [cr_size];
+            for (int i = 0; i < cr_size; ++i)
+                cr_array[i] = array.cr_array[i];
+        } else
+            cr_array = nullptr;
+
+    }
+
+    smart_array& operator=(const smart_array& array)
     {
         if (this == &array) return *this;
-
-        if (cr_array) delete[] cr_array;
-
+        arr_element = array.arr_element;
         cr_size = array.cr_size;
         cr_array = new int[cr_size];
 
@@ -52,6 +63,7 @@ int main() {
         smart_array new_array(2);
         new_array.add_element(44);
         new_array.add_element(34);
+        arr = new_array;
 
     }
     catch (const std::exception& ex) {
