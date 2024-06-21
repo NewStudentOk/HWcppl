@@ -1,55 +1,31 @@
 #include <iostream>
+#include "list.h"
+#include "node.h"
 
-struct ListNode
-{
-public:
-    ListNode(int value, ListNode* prev = nullptr, ListNode* next = nullptr)
-            : value(value), prev(prev), next(next)
-    {
-        if (prev != nullptr) prev->next = this;
-        if (next != nullptr) next->prev = this;
-    }
+List::List() : m_head(new ListNode(static_cast<int>(0))), m_size(0),
+                m_tail(new ListNode(0, m_head)){}
 
-public:
-    int value;
-    ListNode* prev;
-    ListNode* next;
-};
-
-
-class List
-{
-public:
-    List()
-            : m_head(new ListNode(static_cast<int>(0))), m_size(0),
-              m_tail(new ListNode(0, m_head))
-    {
-    }
-
-    virtual ~List()
-    {
+List::~List(){
         Clear();
         delete m_head;
         delete m_tail;
     }
 
-    bool Empty() { return m_size == 0; }
+    bool List::Empty() { return m_size == 0; }
 
-    unsigned long Size() { return m_size; }
+    unsigned long List::Size() { return m_size; }
 
-    void PushFront(int value)
-    {
+    void List::PushFront(int value){
         new ListNode(value, m_head, m_head->next);
         ++m_size;
     }
 
-    void PushBack(int value)
-    {
+    void List::PushBack(int value) {
         new ListNode(value, m_tail->prev, m_tail);
         ++m_size;
     }
 
-    int PopFront()
+    int List::PopFront()
     {
         if (Empty()) throw std::runtime_error("list is empty");
         auto node = extractPrev(m_head->next->next);
@@ -58,7 +34,7 @@ public:
         return ret;
     }
 
-    int PopBack()
+    int List::PopBack()
     {
         if (Empty()) throw std::runtime_error("list is empty");
         auto node = extractPrev(m_tail);
@@ -67,7 +43,7 @@ public:
         return ret;
     }
 
-    void Clear()
+    void List::Clear()
     {
         auto current = m_head->next;
         while (current != m_tail)
@@ -77,8 +53,7 @@ public:
         }
     }
 
-private:
-    ListNode* extractPrev(ListNode* node)
+    ListNode* List::extractPrev(ListNode* node)
     {
         auto target = node->prev;
         target->prev->next = target->next;
@@ -86,9 +61,3 @@ private:
         --m_size;
         return target;
     }
-
-private:
-    ListNode* m_head;
-    ListNode* m_tail;
-    unsigned long m_size;
-};
