@@ -1,7 +1,8 @@
 #include <iostream>
-#include "list.cpp"
-#include <./catch2/catch_test_macros.hpp>
-#include <./catch2/catch_session.hpp>
+#include "list.h"
+#include "catch2/catch_test_macros.hpp"
+#include "catch2/catch_session.hpp"
+
 
 TEST_CASE("list", "[Task_1]")
 {
