@@ -1,11 +1,12 @@
 #include <iostream>
 #include <string>
 #include <utility>
+#include <vector>
+#include <memory>
 
 class big_integer {
-    std::string value;
-
 public:
+    std::string value;
     big_integer() {}
 
     big_integer(long x) : value(std::to_string(x)) {}
@@ -72,8 +73,8 @@ public:
             return res;
         }
         else {
-            int* a = new int[length];
-            int* b = new int[length];
+            std::unique_ptr<int[]> a(new int [length]);
+            std::unique_ptr<int[]> b(new int [length]);
             char* res = new char[length + 1];
             res[length] = '\0';
 
